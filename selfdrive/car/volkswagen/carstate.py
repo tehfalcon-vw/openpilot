@@ -174,7 +174,7 @@ class CarState(CarStateBase):
 
     # Verify EPS readiness to accept steering commands
     hca_status = self.CCP.hca_status_values.get(pt_cp.vl["Lenkhilfe_2"]["LH2_Sta_HCA"])
-    ret.steerFaultPermanent = hca_status in ("DISABLED", "FAULT")
+    ret.steerFaultPermanent = hca_status in ("DISABLED", "FAULT") and ret.cruiseState.speed != 0 #band aid, need to fix
     ret.steerFaultTemporary = hca_status in ("INITIALIZING", "REJECTED")
 
     # Update gas, brakes, and gearshift.
@@ -227,15 +227,14 @@ class CarState(CarStateBase):
 
     # Update ACC radar status.
     self.acc_type = 0
-    ret.cruiseState.available = bool(pt_cp.vl["Motor_5"]["GRA_Hauptschalter"])
-    ret.cruiseState.enabled = pt_cp.vl["Motor_2"]["GRA_Status"] in (1, 2)
-
+    
     # Update ACC setpoint. When the setpoint reads as 255, the driver has not
     # yet established an ACC setpoint, so treat it as zero.
     ret.cruiseState.speed = pt_cp.vl["Motor_2"]["Soll_Geschwindigkeit_bei_GRA_Be"] * CV.KPH_TO_MS
     if ret.cruiseState.speed > 70:  # 255 kph in m/s == no current setpoint
       ret.cruiseState.speed = 0
-
+    ret.cruiseState.available = bool(pt_cp.vl["Motor_5"]["GRA_Hauptschalter"]) and ret.cruiseState.speed != 0 and hca_status not in ("DISABLED", "FAULT")
+    ret.cruiseState.enabled = pt_cp.vl["Motor_2"]["GRA_Status"] in (1, 2) and ret.cruiseState.available
     # Update button states for turn signals and ACC controls, capture all ACC button state/config for passthrough
     ret.leftBlinker, ret.rightBlinker = self.update_blinker_from_stalk(300, pt_cp.vl["Gate_Komf_1"]["GK1_Blinker_li"],
                                                                             pt_cp.vl["Gate_Komf_1"]["GK1_Blinker_re"])
@@ -399,7 +398,6 @@ class CarState(CarStateBase):
       ("ESP_Passiv_getastet", "Bremse_1"),       # Stability control disabled
       ("GRA_Hauptschalter", "Motor_5"),          # ACC main switch
       ("GRA_Status", "Motor_2"),                 # ACC engagement status
-      ("Soll_Geschwindigkeit_bei_GRA_Be", "Motor_2"), # Cruise Control Main Switch
       ("GK1_Fa_Tuerkont", "Gate_Komf_1"),        # Door open, driver
       ("BSK_BT_geoeffnet", "Gate_Komf_1"),       # Door open, passenger
       ("BSK_HL_geoeffnet", "Gate_Komf_1"),       # Door open, rear left
@@ -511,15 +509,6 @@ class MqbExtraSignals:
 
 class PqExtraSignals:
   # Additional signal and message lists for optional or bus-portable controllers
-  fwd_radar_signals = [
-    ("ACS_Typ_ACC", "ACC_System"),               # Basic vs FtS (no SnG support on PQ)
-    ("ACA_StaACC", "ACC_GRA_Anzeige"),           # ACC drivetrain coordinator status
-    ("ACA_V_Wunsch", "ACC_GRA_Anzeige"),         # ACC set speed
-  ]
-  fwd_radar_checks = [
-    ("ACC_System", 50),                          # From J428 ACC radar control module
-    ("ACC_GRA_Anzeige", 25),                     # From J428 ACC radar control module
-  ]
   bsm_radar_signals = [
     ("SWA_Infostufe_SWA_li", "SWA_1"),           # Blind spot object info, left
     ("SWA_Warnung_SWA_li", "SWA_1"),             # Blind spot object warning, left
