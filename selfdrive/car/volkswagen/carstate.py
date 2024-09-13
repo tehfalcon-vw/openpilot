@@ -399,7 +399,7 @@ class CarState(CarStateBase):
       ("ESP_Passiv_getastet", "Bremse_1"),       # Stability control disabled
       ("GRA_Hauptschalter", "Motor_5"),          # ACC main switch
       ("GRA_Status", "Motor_2"),                 # ACC engagement status
-      ("Soll_Geschwindigkeit_bei_GRA_Be", "Motor_2"),
+      ("Soll_Geschwindigkeit_bei_GRA_Be", "Motor_2"), # Cruise Set
       ("GK1_Fa_Tuerkont", "Gate_Komf_1"),        # Door open, driver
       ("BSK_BT_geoeffnet", "Gate_Komf_1"),       # Door open, passenger
       ("BSK_HL_geoeffnet", "Gate_Komf_1"),       # Door open, rear left
