@@ -1,6 +1,6 @@
 [submodule "panda"]
 	path = panda
-	url = https://github.com/tehfalcon-vw/panda
+	url = https://github.com/tehfalcon-vw/panda.git
 [submodule "opendbc"]
   path = opendbc_repo
   url = https://github.com/tehfalcon-vw/opendbc.git
@@ -8,23 +8,14 @@
   path = msgq_repo
   url = https://github.com/sunnypilot/msgq.git
 [submodule "rednose_repo"]
-	path = rednose_repo
-	url = https://github.com/commaai/rednose/tree/7fddc8e6d49def83c952a78673179bdc62789214
+  path = rednose_repo
+  url = https://github.com/commaai/rednose.git
 [submodule "teleoprtc_repo"]
-	path = teleoprtc_repo
-	url = https://github.com/commaai/teleoprtc/tree/389815b8ca5302ce7c1504b7841d4eb61a8cd51b
+  path = teleoprtc_repo
+  url = https://github.com/commaai/teleoprtc.git
 [submodule "tinygrad"]
   path = tinygrad_repo
   url = https://github.com/tinygrad/tinygrad.git
 [submodule "sunnypilot/neural_network_data"]
-	path = sunnypilot/neural_network_data
-	url = https://github.com/sunnypilot/neural-network-data/tree/03cac2d30e111e0689c0429cb8c1fe6cb5a905af
-[submodule "msgq_repo"]
-	path = msgq_repo
-	url = https://github.com/sunnypilot/msgq/tree/fd7bd0df50a95dca3f180705721aa1fa300aef0f
-[submodule "opendbc_repo"]
-	path = opendbc_repo
-	url = https://github.com/tehfalcon-vw/opendbc
-[submodule "tinygrad_repo"]
-	path = tinygrad_repo
-	url = https://github.com/tinygrad/tinygrad/tree/d2bb1bcb976f106a41928f2d66d354ab7afd6f59
+  path = sunnypilot/neural_network_data
+  url = https://github.com/sunnypilot/neural-network-data.git
