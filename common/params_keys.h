@@ -132,7 +132,7 @@ inline static std::unordered_map<std::string, ParamKeyAttributes> keys = {
 	// --- infiniteCable params --- //
 	{"DisableScreenTimer", {PERSISTENT, BOOL}},
 	{"DarkMode", {PERSISTENT, BOOL}},
-	{"EnableCurvatureController", {PERSISTENT, BOOL}},
+	{"EnableCurvatureController", {PERSISTENT, BOOL, "1"}},
     {"EnableScreenEvent", {CLEAR_ON_MANAGER_START | CLEAR_ON_ONROAD_TRANSITION, BOOL}},
     {"EnableSmoothSteer", {PERSISTENT, BOOL}},
     {"EnableSpeedLimitControl", {PERSISTENT, BOOL}},
@@ -204,10 +204,12 @@ inline static std::unordered_map<std::string, ParamKeyAttributes> keys = {
     {"DynamicExperimentalControl", {PERSISTENT | BACKUP, BOOL, "0"}},
     {"BlindSpot", {PERSISTENT | BACKUP, BOOL, "0"}},
 
-    // model panel params
+    // sunnypilot model params
     {"LagdToggle", {PERSISTENT | BACKUP, BOOL, "1"}},
     {"LagdToggleDelay", {PERSISTENT | BACKUP, FLOAT, "0.2"}},
     {"LagdValueCache", {PERSISTENT, FLOAT, "0.2"}},
+    {"LaneTurnDesire", {PERSISTENT | BACKUP, BOOL, "0"}},
+    {"LaneTurnValue", {PERSISTENT | BACKUP, FLOAT, "19.0"}},
 
     // mapd
     {"MapAdvisorySpeedLimit", {CLEAR_ON_ONROAD_TRANSITION, FLOAT}},
