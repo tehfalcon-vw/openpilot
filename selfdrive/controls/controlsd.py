@@ -58,9 +58,8 @@ class Controls(ControlsExt, ModelStateBase):
 
     self.steer_limited_by_safety = False
     self.curvature = 0.0
-    self.curvature_no_roll = 0.0
+    self.roll_compensation = 0.0
     self.desired_curvature = 0.0
-    self.roll = 0.0
 
     self.enable_curvature_controller = self.params.get_bool("EnableCurvatureController")
     self.enable_speed_limit_control = self.params.get_bool("EnableSpeedLimitControl")
@@ -110,8 +109,7 @@ class Controls(ControlsExt, ModelStateBase):
 
     steer_angle_without_offset = math.radians(CS.steeringAngleDeg - lp.angleOffsetDeg)
     self.curvature = -self.VM.calc_curvature(steer_angle_without_offset, CS.vEgo, lp.roll)
-    self.curvature_no_roll = -self.VM.calc_curvature(steer_angle_without_offset, CS.vEgo, 0.0)
-    self.roll = lp.roll
+    self.roll_compensation = -VM.roll_compensation(lp.roll, CS.vEgo)
 
     # Update Torque Params
     if self.CP.lateralTuning.which() == 'torque':
@@ -191,13 +189,13 @@ class Controls(ControlsExt, ModelStateBase):
     CS = self.sm['carState']
 
     CC.curvatureControllerActive = self.enable_curvature_controller # for car controller curvature correction activation
-    CC.currentCurvatureNoRoll = self.curvature_no_roll
-    CC.rollDEPRECATED = self.roll # for lateral iso limit calculation
     CC.steerLimited = self.steer_limited_by_safety
 
     # Orientation and angle rates can be useful for carcontroller
     # Only calibrated (car) frame is relevant for the carcontroller
     CC.currentCurvature = self.curvature
+    CC.rollCompensation = self.roll_compensation
+    
     if self.calibrated_pose is not None:
       CC.orientationNED = self.calibrated_pose.orientation.xyz.tolist()
       CC.angularVelocity = self.calibrated_pose.angular_velocity.xyz.tolist()
