@@ -72,8 +72,8 @@ class Controls(ControlsExt, ModelStateBase):
     self.LoC = LongControl(self.CP)
     self.VM = VehicleModel(self.CP)
     self.LaC: LatControl
-    if self.CP.steerControlType == car.CarParams.SteerControlType.angle or
-       self.CP.steerControlType == car.CarParams.SteerControlType.curvatureDEPRECATED:
+    if (self.CP.steerControlType == car.CarParams.SteerControlType.angle or
+        self.CP.steerControlType == car.CarParams.SteerControlType.curvatureDEPRECATED):
       self.LaC = LatControlAngle(self.CP, self.CP_SP, self.CI)
     elif self.CP.lateralTuning.which() == 'pid':
       self.LaC = LatControlPID(self.CP, self.CP_SP, self.CI)
@@ -222,8 +222,8 @@ class Controls(ControlsExt, ModelStateBase):
 
     if self.sm['selfdriveState'].active:
       CO = self.sm['carOutput']
-      if self.CP.steerControlType == car.CarParams.SteerControlType.angle or
-         self.CP.steerControlType == car.CarParams.SteerControlType.curvatureDEPRECATED:
+      if (self.CP.steerControlType == car.CarParams.SteerControlType.angle or
+          self.CP.steerControlType == car.CarParams.SteerControlType.curvatureDEPRECATED):
         self.steer_limited_by_safety = abs(CC.actuators.steeringAngleDeg - CO.actuatorsOutput.steeringAngleDeg) > \
                                               STEER_ANGLE_SATURATION_THRESHOLD
       else:
@@ -249,8 +249,8 @@ class Controls(ControlsExt, ModelStateBase):
                          (self.sm['selfdriveState'].state == State.softDisabling))
 
     lat_tuning = self.CP.lateralTuning.which()
-    if self.CP.steerControlType == car.CarParams.SteerControlType.angle or
-       self.CP.steerControlType == car.CarParams.SteerControlType.curvatureDEPRECATED:
+    if (self.CP.steerControlType == car.CarParams.SteerControlType.angle or
+        self.CP.steerControlType == car.CarParams.SteerControlType.curvatureDEPRECATED):
       cs.lateralControlState.angleState = lac_log
     elif lat_tuning == 'pid':
       cs.lateralControlState.pidState = lac_log
