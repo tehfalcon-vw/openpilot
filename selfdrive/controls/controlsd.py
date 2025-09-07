@@ -197,6 +197,7 @@ class Controls(ControlsExt, ModelStateBase):
     CC.rollCompensation = self.roll_compensation
     
     if self.calibrated_pose is not None:
+      CC.yawRate = self.calibrated_pose.angular_velocity.yaw
       CC.orientationNED = self.calibrated_pose.orientation.xyz.tolist()
       CC.angularVelocity = self.calibrated_pose.angular_velocity.xyz.tolist()
 
