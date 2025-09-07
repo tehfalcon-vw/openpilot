@@ -109,7 +109,7 @@ class Controls(ControlsExt, ModelStateBase):
 
     steer_angle_without_offset = math.radians(CS.steeringAngleDeg - lp.angleOffsetDeg)
     self.curvature = -self.VM.calc_curvature(steer_angle_without_offset, CS.vEgo, lp.roll)
-    self.roll_compensation = -VM.roll_compensation(lp.roll, CS.vEgo)
+    self.roll_compensation = -self.VM.roll_compensation(lp.roll, CS.vEgo)
 
     # Update Torque Params
     if self.CP.lateralTuning.which() == 'torque':
