@@ -65,6 +65,7 @@ class Controls(ControlsExt, ModelStateBase):
     self.enable_speed_limit_predicative = self.params.get_bool("EnableSpeedLimitPredicative")
     self.enable_smooth_steer = self.params.get_bool("EnableSmoothSteer")
     self.smooth_steer = PT2Filter(46.0, 1.0, DT_CTRL)
+    self.force_rhd_for_bsm = self.params.get_bool("ForceRHDForBSM")
 
     self.pose_calibrator = PoseCalibrator()
     self.calibrated_pose: Pose | None = None
@@ -95,6 +96,7 @@ class Controls(ControlsExt, ModelStateBase):
       self.enable_smooth_steer = self.params.get_bool("EnableSmoothSteer")
       self.enable_speed_limit_control = self.params.get_bool("EnableSpeedLimitControl")
       self.enable_speed_limit_predicative = self.params.get_bool("EnableSpeedLimitPredicative")
+      self.force_rhd_for_bsm = self.params.get_bool("ForceRHDForBSM")
   
   def state_control(self):
     CS = self.sm['carState']
@@ -188,6 +190,7 @@ class Controls(ControlsExt, ModelStateBase):
 
     CC.curvatureControllerActive = self.enable_curvature_controller # for car controller curvature correction activation
     CC.steerLimited = self.steer_limited_by_safety
+    CC.forceRHDForBSM = self.force_rhd_for_bsm
 
     # Orientation and angle rates can be useful for carcontroller
     # Only calibrated (car) frame is relevant for the carcontroller
