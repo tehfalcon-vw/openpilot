@@ -102,7 +102,7 @@ InfiniteCableTogglesPanel::InfiniteCableTogglesPanel(SettingsWindow *parent) : L
   float default_offset = 0.0f;
   
   OptionControlSP *steer_offset_control = new OptionControlSP(
-    "SteerOffsetDeg",
+    "AngleOffsetDegree",
     tr("Steering Angle Offset"),
     tr("Adjust steering angle offset manually (in degrees)."), 
     "", {-1000, 1000}, 1, false, nullptr, true, true);
