@@ -103,7 +103,7 @@ InfiniteCableTogglesPanel::InfiniteCableTogglesPanel(SettingsWindow *parent) : L
     "AngleOffsetDegree",
     tr("Steering Angle Offset"),
     tr("Adjust steering angle offset manually (in degrees)."), 
-    "", {-1000, 1000}, 1, false, nullptr, true, true);
+    "", {-1000, 1000}, 10, false, nullptr, true, true);
 
   float stored_val = QString::fromStdString(params.get("AngleOffsetDegree")).toFloat();
   steer_offset_control->setLabel(QString::number(stored_val, 'f', 2) + "°");
