@@ -106,13 +106,13 @@ InfiniteCableTogglesPanel::InfiniteCableTogglesPanel(SettingsWindow *parent) : L
     "", {-2000, 2000}, 10, false, nullptr, true, true);
 
   float stored_val = QString::fromStdString(params.get("AngleOffsetDegree")).toFloat();
-  steer_offset_control->setLabel(QString::number(stored_val, 'f', 2) + "°");
+  steer_offset_control->setLabel(QString::number(stored_val, 'f', 1) + "°");
   steer_offset_control->showDescription();
   addItem(steer_offset_control);
 
   QObject::connect(steer_offset_control, &OptionControlSP::updateLabels, [=]() {
     float val = QString::fromStdString(params.get("AngleOffsetDegree")).toFloat();
-    steer_offset_control->setLabel(QString::number(val, 'f', 2) + "°");
+    steer_offset_control->setLabel(QString::number(val, 'f', 1) + "°");
   });
 }
 
