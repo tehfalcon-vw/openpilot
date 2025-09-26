@@ -15,6 +15,7 @@
 #include "selfdrive/ui/qt/widgets/scrollview.h"
 #include "selfdrive/ui/qt/offroad/developer_panel.h"
 #include "selfdrive/ui/qt/offroad/firehose.h"
+#include "selfdrive/ui/sunnypilot/qt/widgets/controls.h"
 
 InfiniteCableTogglesPanel::InfiniteCableTogglesPanel(SettingsWindow *parent) : ListWidget(parent) {
   std::vector<std::tuple<QString, QString, QString, QString, bool>> toggle_defs{
@@ -97,6 +98,25 @@ InfiniteCableTogglesPanel::InfiniteCableTogglesPanel(SettingsWindow *parent) : L
     addItem(toggle);
     toggles[param.toStdString()] = toggle;
   }
+
+  float default_offset = 0.0f;
+  
+  OptionControlSP *steer_offset_control = new OptionControlSP(
+    "SteerOffsetDeg",
+    tr("Steering Angle Offset"),
+    tr("Adjust steering angle offset manually (in degrees)."), 
+    "", {-1000, 1000}, 1, false, nullptr, true, true);
+  
+  float stored_val = QString::fromStdString(params.get("SteerOffsetDeg")).toFloat();
+  steer_offset_control->setLabel(QString::number(stored_val, 'f', 2) + "°");
+  steer_offset_control->showDescription();
+  addItem(steer_offset_control);
+  
+  QObject::connect(steer_offset_control, &OptionControlSP::updateLabels, [=]() {
+    float val = QString::fromStdString(params.get("SteerOffsetDeg")).toFloat();
+    steer_offset_control->setLabel(QString::number(val, 'f', 2) + "°");
+  });
+	
 }
 
 void InfiniteCableTogglesPanel::expandToggleDescription(const QString &param) {
