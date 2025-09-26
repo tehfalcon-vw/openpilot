@@ -293,6 +293,7 @@ def main():
       msg_dat = msg.to_bytes()
       if sm.frame % 1200 == 0:  # once a minute
         params.put_nonblocking("LiveParametersV2", msg_dat)
+        params.put_nonblocking("AngleOffsetDegree", msg.liveParameters.angleOffsetDeg)
 
       pm.send('liveParameters', msg_dat)
 
