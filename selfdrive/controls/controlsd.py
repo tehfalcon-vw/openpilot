@@ -97,7 +97,6 @@ class Controls(ControlsExt, ModelStateBase):
       self.enable_speed_limit_control = self.params.get_bool("EnableSpeedLimitControl")
       self.enable_speed_limit_predicative = self.params.get_bool("EnableSpeedLimitPredicative")
       self.force_rhd_for_bsm = self.params.get_bool("ForceRHDForBSM")
-      self.force_steer_angle_offset = float(self.params.get("AngleOffsetDegree"))
   
   def state_control(self):
     CS = self.sm['carState']
