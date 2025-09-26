@@ -55,7 +55,7 @@ class VehicleParamsLearner:
     self.total_offset_valid = True
     self.roll_valid = True
 
-    self.manual_steer_offset = float(params.get("AngleOffsetDegree") or 0.0)
+    self.manual_steer_offset = float(Params().get("AngleOffsetDegree") or 0.0)
 
     self.reset(None)
 
