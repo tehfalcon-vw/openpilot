@@ -31,7 +31,7 @@ class VehicleParamsLearner:
     self.x_initial = CarKalman.initial_x.copy()
     self.x_initial[States.STEER_RATIO] = steer_ratio
     self.x_initial[States.STIFFNESS] = stiffness_factor
-    self.x_initial[States.ANGLE_OFFSET] = angle_offset
+    self.x_initial[States.ANGLE_OFFSET] = float(Params().get("AngleOffsetDegree") or angle_offset)
     self.P_initial = P_initial if P_initial is not None else CarKalman.P_initial
 
     self.kf.set_globals(
@@ -55,15 +55,12 @@ class VehicleParamsLearner:
     self.total_offset_valid = True
     self.roll_valid = True
 
-    self.manual_steer_offset = float(Params().get("AngleOffsetDegree") or 0.0)
-
     self.reset(None)
 
   def reset(self, t: float | None):
     self.kf.init_state(self.x_initial, covs=self.P_initial, filter_time=t)
 
     self.angle_offset, self.roll, self.active = np.degrees(self.x_initial[States.ANGLE_OFFSET].item()), 0.0, False
-    self.angle_offset = self.angle_offset + self.manual_steer_offset
     self.avg_angle_offset = self.angle_offset
 
   def handle_log(self, t: float, which: str, msg: capnp._DynamicStructReader):
