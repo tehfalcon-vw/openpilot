@@ -35,8 +35,8 @@ class VehicleParamsLearner:
     self.x_initial[States.STIFFNESS] = stiffness_factor
     set_manual_angle_offset = params.get_bool("EnableAngleOffset")
     self.allow_higher_angle_offset = set_manual_angle_offset
-    manual_angle_offset = float(params.get("AngleOffsetDegree") or 0.0)
-    self.x_initial[States.ANGLE_OFFSET] = manual_angle_offset if set_manual_angle_offset else angle_offset
+    manual_angle_offset_deg = float(params.get("AngleOffsetDegree") or 0.0)
+    self.x_initial[States.ANGLE_OFFSET] = np.radians(manual_angle_offset_deg) if set_manual_angle_offset else angle_offset
     self.P_initial = P_initial if P_initial is not None else CarKalman.P_initial
 
     self.kf.set_globals(
