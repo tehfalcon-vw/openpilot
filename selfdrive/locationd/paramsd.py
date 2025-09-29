@@ -26,12 +26,15 @@ LOW_ACTIVE_SPEED = 10.0
 
 class VehicleParamsLearner:
   def __init__(self, CP: car.CarParams, steer_ratio: float, stiffness_factor: float, angle_offset: float, P_initial: np.ndarray | None = None):
+    params = Params()
     self.kf = CarKalman(GENERATED_DIR)
 
     self.x_initial = CarKalman.initial_x.copy()
     self.x_initial[States.STEER_RATIO] = steer_ratio
     self.x_initial[States.STIFFNESS] = stiffness_factor
-    self.x_initial[States.ANGLE_OFFSET] = float(Params().get("AngleOffsetDegree") or angle_offset)
+    set_manual_angle_offset = params.get_bool("EnableAngleOffset")
+    manual_angle_offset = float(params.get("AngleOffsetDegree") or 0.0)
+    self.x_initial[States.ANGLE_OFFSET] = manual_angle_offset if set_manual_angle_offset else angle_offset
     self.P_initial = P_initial if P_initial is not None else CarKalman.P_initial
 
     self.kf.set_globals(
