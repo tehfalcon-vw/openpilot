@@ -75,6 +75,13 @@ InfiniteCableTogglesPanel::InfiniteCableTogglesPanel(SettingsWindow *parent) : L
       "../assets/icons/eye_closed.png",
       false,
     },
+    {
+      "EnableAngleOffset",
+      tr("Enable Steer Angle Offset"),
+      tr("Enables the use of manual steer angle offset selection as start value for params detection."),
+      "../assets/icons/eye_closed.png",
+      false,
+    },
   };
 
   for (auto &[param, title, desc, icon, needs_restart] : toggle_defs) {
@@ -99,7 +106,7 @@ InfiniteCableTogglesPanel::InfiniteCableTogglesPanel(SettingsWindow *parent) : L
     toggles[param.toStdString()] = toggle;
   }
 
-  OptionControlSP *steer_offset_control = new OptionControlSP(
+  steer_offset_control = new OptionControlSP(
     "AngleOffsetDegree",
     tr("Steering Angle Offset"),
     tr("Adjust steering angle offset manually (in degrees)."), 
