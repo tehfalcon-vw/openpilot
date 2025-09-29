@@ -129,8 +129,10 @@ inline static std::unordered_map<std::string, ParamKeyAttributes> keys = {
     {"Version", {PERSISTENT, STRING}},
 	
 	// --- infiniteCable params --- //
+	{"AngleOffsetDegree", {PERSISTENT, FLOAT, "0.0"}},
 	{"DisableScreenTimer", {PERSISTENT, BOOL}},
 	{"DarkMode", {PERSISTENT, BOOL}},
+	{"EnableAngleOffset", {PERSISTENT, BOOL}},
 	{"EnableCurvatureController", {PERSISTENT, BOOL, "1"}},
     {"EnableScreenEvent", {CLEAR_ON_MANAGER_START | CLEAR_ON_ONROAD_TRANSITION, BOOL}},
     {"EnableSmoothSteer", {PERSISTENT, BOOL}},
