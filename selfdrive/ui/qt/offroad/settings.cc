@@ -123,6 +123,14 @@ InfiniteCableTogglesPanel::InfiniteCableTogglesPanel(SettingsWindow *parent) : L
   });
 }
 
+void InfiniteCableTogglesPanel::showEvent(QShowEvent *event) {
+  ListWidget::showEvent(event);
+  if (steer_offset_control) {
+    float val = QString::fromStdString(params.get("AngleOffsetDegree")).toFloat();
+    steer_offset_control->setLabel(QString::number(val, 'f', 1) + "°");
+  }
+}
+
 void InfiniteCableTogglesPanel::expandToggleDescription(const QString &param) {
   toggles[param.toStdString()]->showDescription();
 }
