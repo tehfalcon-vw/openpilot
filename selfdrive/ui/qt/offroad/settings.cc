@@ -117,6 +117,9 @@ InfiniteCableTogglesPanel::InfiniteCableTogglesPanel(SettingsWindow *parent) : L
   steer_offset_control->showDescription();
   addItem(steer_offset_control);
 
+  bool enable_angle_offset = params.getBool("EnableAngleOffset");
+  steer_offset_control->setVisible(enable_angle_offset);
+
   QObject::connect(steer_offset_control, &OptionControlSP::updateLabels, [=]() {
     float val = QString::fromStdString(params.get("AngleOffsetDegree")).toFloat();
     steer_offset_control->setLabel(QString::number(val, 'f', 1) + "°");
