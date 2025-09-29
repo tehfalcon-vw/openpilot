@@ -21,6 +21,7 @@
 #define ButtonParamControl ButtonParamControlSP
 #define ToggleControl ToggleControlSP
 #define LabelControl LabelControlSP
+
 #else
 #include "selfdrive/ui/ui.h"
 #include "selfdrive/ui/qt/widgets/controls.h"
@@ -81,8 +82,10 @@ public slots:
   void scrollToToggle(const QString &param);
 
 protected:
+  void showEvent(QShowEvent *event) override;
   Params params;
   std::map<std::string, ParamControl*> toggles;
+  OptionControlSP *steer_offset_control = nullptr;
 };
 
 class TogglesPanel : public ListWidget {
