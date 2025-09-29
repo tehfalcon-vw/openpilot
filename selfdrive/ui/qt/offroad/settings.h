@@ -21,7 +21,6 @@
 #define ButtonParamControl ButtonParamControlSP
 #define ToggleControl ToggleControlSP
 #define LabelControl LabelControlSP
-
 #else
 #include "selfdrive/ui/ui.h"
 #include "selfdrive/ui/qt/widgets/controls.h"
